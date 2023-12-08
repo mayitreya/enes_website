@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Dashboard</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            height: 100vh;
+        }
+
+        .dashboard {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+        }
+
+        .header {
+            background-color: #3498db;
+            color: #fff;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .main-content {
+            display: flex;
+            flex: 1;
+        }
+
+        .sidebar {
+            background-color: #2c3e50;
+            color: #fff;
+            padding: 20px;
+            width: 200px;
+        }
+
+        .content {
+            flex: 1;
+            padding: 20px;
+        }
+
+        .sidebar-button {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            text-decoration: none;
+            color: #fff;
+            background-color: #34495e;
+            border: none;
+            text-align: left;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .sidebar-button:hover {
+            background-color: #2c3e50;
+        }
+
+        h4 {
+            font-weight: normal;
+        }
+    </style>
+</head>
+<body>
+
+<div class="dashboard">
+    <div class="header">
+        <h1>Welcome, Student!</h1>
+    </div>
+
+    <div class="main-content">
+        <div class="sidebar">
+            <a href="#" class="sidebar-button" onclick="showSection('yoursubjects')">Your Subjects</a>
+            <a href="#" class="sidebar-button" onclick="showSection('progress')">Progress/Achievements</a>
+            <a href="#" class="sidebar-button" onclick="showSection('discuss')">Discuss</a>
+            <a href="#" class="sidebar-button" onclick="showSection('joinclass')">Join a Class</a>
+            <a href="#" class="sidebar-button" onclick="showSection('profilesettings')">Profile Settings</a>
+            <a href="index.html" class="sidebar-button">Logout</a>
+        </div>
+
+        <div class="content" id="dashboard-content">
+            <h2>Click on a Sidebar Section to Navigate Around!</h2>
+        </div>
+    </div>
+</div>
+
+<script>
+    function showSection(section) {
+        var contentElement = document.getElementById('dashboard-content');
+
+        var yourSubjectsHTML = `<h2>Your Subjects</h2>
+                                <button onclick="openSubjectWindow('Math')">Mrs. Appleseed's Math Class</button>
+                                <br /><br />
+                                <button onclick="openSubjectWindow('Science')">Mr. Jones' Science Class</button>
+                                <br /><br />
+                                <button>Any other subject the student is enrolled in (this button doesn't do anything in the MVP)</button>`;
+
+        var progressHTML = `<h2>Your Current Progress</h2>
+                            <p>You're 50 points away from Level 3! Keep going!</p>
+                            <img src="studentprogress.png" width="500" />`;
+
+        var discussHTML = `<h2>Discuss with Your Teacher/Peers</h2>
+                           <h3>Your Message Inbox:</h3>
+                           <h4>Mrs. Appleseed :: See me after class tomorrow for the explanation you needed!</h4>
+                           <h4>Johnny Smith :: Hey, what did you get for Math HW question 4??</h4>
+                           <br /><br />
+                           <h3>Send a Message to Someone:</h3>
+                           <h4>Recipient:</h4>
+                           <input type="text" class="textbox" required>
+                           <h4>Message:</h4>
+                           <textarea id="message" name="message" rows="4" required></textarea>
+                           <br />
+                           <button type="submit" onclick="sendMessage()">Send</button>`
+
+        var joinClassHTML = `<h2>Join a Class (Non-functional in this MVP)</h2>
+                            <input type="text" class="textbox" placeholder="Class Code">
+                            <button type="button" class="join-button" onclick="joinClass()">Join</button>`;
+
+        switch (section) {
+            case 'yoursubjects':
+                contentElement.innerHTML = yourSubjectsHTML;
+                break;
+            case 'progress':
+                contentElement.innerHTML = progressHTML;
+                break;
+            case 'discuss':
+                contentElement.innerHTML = discussHTML;
+                break;
+            case 'joinclass':
+                contentElement.innerHTML = joinClassHTML;
+                break;
+            case 'profilesettings':
+                contentElement.innerHTML = "Profile Settings Go Here (Not really needed for MVP)";
+                break;
+            default:
+                contentElement.innerHTML = "You should never be able to see this text lol";
+                break;
+        }
+    }
+
+    function openSubjectWindow(subject) {
+        var subjectText = `Multiplication is a fancy word for repeated addition.
+        It helps us when we want to know the total of several groups with the same number of items.
+        For example, if you have 3 groups of 4 apples each, you can use multiplication to find out how many apples
+        you have in total. (Of course, the rest of the article would be continued, but for the MVP, this will suffice.)`;
+
+        var subjectWindowHTML = `<html>
+                                    <head>
+                                        <title>What is Multiplication?</title>
+                                    </head>
+                                    <body>
+                                        <h2>What is Multiplication? (Article)</h2>
+                                        <p>${subjectText}</p>
+                                        <h2>What is Multiplication? (Video)</h2>
+                                        <iframe width="560" height="315" src="https://www.youtube.com/embed/randomvideo" frameborder="0" allowfullscreen></iframe>
+                                        <h2>What is Multiplication? (Flashcards)</h2>
+                                        <p>A flashcard game would go here, but for the MVP it isn't needed.</p>
+                                        <h2>What is Multiplication? (Quiz)</h2>
+                                        <p>A short quiz would go here (and the student would be able to make their own quiz) but that functionality is not needed for the MVP.</p>
+                                        <button>Next Section (Non-functional)</button>
+                                        <br />
+                                        <button>Previous Section (Non-functional)</button>
+                                    </body>
+                                </html>`;
+                            
+        var subjectWindow = window.open('', 'SubjectWindow', 'width=800,height=800');
+        subjectWindow.document.write(subjectWindowHTML);
+    }
+
+    function joinClass() {
+        alert("Joined Class!");
+    }
+
+    function sendMessage() {
+        alert("Message Sent to Recipient!");
+    }
+</script>
+
+</body>
+</html>
